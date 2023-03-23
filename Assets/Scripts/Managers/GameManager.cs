@@ -68,7 +68,8 @@ namespace MonsterQuest
                 }
             }
         }
-        static void Main(string[] args)
+        private void Start()
+
         {
             var random = new Random();
             var party = new List<string> { "Jazlyn", "Theron", "Dayana", "Rolando" };
