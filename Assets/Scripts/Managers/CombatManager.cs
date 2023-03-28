@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using System.Linq;
 using Random = System.Random;
 
 namespace MonsterQuest
@@ -10,7 +10,7 @@ namespace MonsterQuest
     {
         static Random rnd = new Random();
 
-        static void Start()
+        public static void Start()
         {
             List<string> characters = new List<string> { "Jazlyn", "Theron", "Dayana", "Roland" };
 
@@ -19,29 +19,33 @@ namespace MonsterQuest
             Simulate(characters, "Troll", DiceRoll(8, 10, 40), 16);
         }
 
-        static int DiceRoll(int numberOfRolls, int diceSides, int fixedBonus = 0)
+        public static int DiceRoll(int numberOfDice, int diceSides, int fixedBonus = 0)
         {
-            int sum = 0;
-            for (int i = 0; i < numberOfRolls; i++)
+            var random = new Random();
+            int result = 0;
+
+            for (int i = 0; i < numberOfDice; i++)
             {
-                sum += rnd.Next(1, diceSides + 1);
+                result += random.Next(1, diceSides + 1);
             }
-            return sum + fixedBonus;
+            result += fixedBonus;
+            return result;
         }
 
         public static void Simulate(List<string> characterNames, string monsterName, int monsterHP, int savingThrowDC)
         {
-            Console.WriteLine($"Watch out," + monsterName + " with" +  monsterHP + "HP!");
+            Console.WriteLine($"Watch out, {monsterName} appears with {monsterHP} HP!");
             while (monsterHP > 0 && characterNames.Count > 0)
             {
                 foreach (string character in characterNames)
                 {
                     int damage = DiceRoll(2, 6);
-                    Console.WriteLine($"{character} hits the  for {damage} the {monsterName}  has {monsterHP} HP left.");
+                    Console.WriteLine($"{character} hits the {monsterName} {damage} damage the {monsterName} has {monsterHP} HP appears!");
                     monsterHP -= damage;
                     if (monsterHP <= 0)
                     {
-                       // Console.WriteLine($"The {monsterName} ");
+
+                        Console.WriteLine($"The {monsterName} rolls a {savingThrowDC} and fails to be saved!");
                         break;
                     }
                 }
@@ -52,14 +56,14 @@ namespace MonsterQuest
                 }
 
                 int saveRoll = DiceRoll(1, 20);
-                Console.WriteLine($"The {monsterName} attacks the party! Saving throw DC is {savingThrowDC}.");
+                Console.WriteLine($"The {monsterName} Saved {savingThrowDC} from the attack!");
                 if (saveRoll >= savingThrowDC)
                 {
                     Console.WriteLine($"The  {monsterName}'s attack!");
                 }
                 else
                 {
-                   // Console.WriteLine($"The {monsterName}'s attack hits the party!");
+                    Console.WriteLine($"The {monsterName}'s attack hits the party!");
                     int indexToRemove = rnd.Next(characterNames.Count);
                     Console.WriteLine($"{characterNames[indexToRemove]} is killed by the {monsterName}!");
                     characterNames.RemoveAt(indexToRemove);
@@ -71,7 +75,7 @@ namespace MonsterQuest
                 }
             }
 
-            //Console.WriteLine("Combat simulation over.");
+            Console.WriteLine("Combat simulation over.");
         }
     }
 }

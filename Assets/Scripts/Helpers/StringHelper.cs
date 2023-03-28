@@ -31,7 +31,7 @@ namespace MonsterQuest
 
                 if (useSerialComma)
                 {
-                    //Prepend "and" to the last item in the copied list
+                    
                     string lastItem = itemsCopy[items.Count() - 1];
                     lastItem = $"and {lastItem}";
                     itemsCopy[items.Count() - 1] = lastItem;
@@ -39,7 +39,7 @@ namespace MonsterQuest
                 }
                 else
                 {
-                    //Join the two last items with "and" and set this text as the second last item in the copied list
+                    
                     string lastTwoItems = $"{itemsCopy[items.Count() - 2]} and {itemsCopy[items.Count() - 1]}";
                     itemsCopy[items.Count() - 2] = lastTwoItems;
 
