@@ -6,12 +6,12 @@ namespace MonsterQuest
 {
     public class Combat : MonoBehaviour
     {
-        public Monster monster { get; private set; }
+        public Monster Monster { get; private set; }
 
         public Combat(Monster monster)
         {
-            this.monster = monster;
-           
+            Monster = monster;
+
         }
 
     }

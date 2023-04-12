@@ -1,80 +1,55 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using Random = System.Random;
 
 namespace MonsterQuest
 {
     public class CombatManager : MonoBehaviour
     {
-        static Random rnd = new Random();
+        private GameState _gameState;
 
-        public static void Start()
+        public void Simulate(GameState gameState)
         {
-            List<string> characters = new List<string> { "Jazlyn", "Theron", "Dayana", "Roland" };
-
-            Simulate(characters, "Orc", DiceRoll(2, 8, 6), 10);
-            Simulate(characters, "Azer", DiceRoll(6, 8, 12), 18);
-            Simulate(characters, "Troll", DiceRoll(8, 10, 40), 16);
-        }
-
-        public static int DiceRoll(int numberOfDice, int diceSides, int fixedBonus = 0)
-        {
-            var random = new Random();
-            int result = 0;
-
-            for (int i = 0; i < numberOfDice; i++)
+            var monster = gameState.Combat.Monster;
+            var characters = gameState.Party.Members;
+            Console.WriteLine($"Watch out, {monster.DisplayName} appears with {monster.HitPoints} HP!");
+            while (monster.HitPoints > 0 && characters.Count > 0)
             {
-                result += random.Next(1, diceSides + 1);
-            }
-            result += fixedBonus;
-            return result;
-        }
-
-        public static void Simulate(List<string> characterNames, string monsterName, int monsterHP, int savingThrowDC)
-        {
-            Console.WriteLine($"Watch out, {monsterName} appears with {monsterHP} HP!");
-            while (monsterHP > 0 && characterNames.Count > 0)
-            {
-                foreach (string character in characterNames)
+                foreach (var character in characters)
                 {
-                    int damage = DiceRoll(2, 6);
-                    Console.WriteLine($"{character} hits the {monsterName} {damage} damage the {monsterName} has {monsterHP} HP appears!");
-                    monsterHP -= damage;
-                    if (monsterHP <= 0)
+                    int damage = DiceHelper.DiceRoll(2, 6);
+                    monster.TakeDamage(damage);
+                    Console.WriteLine($"{character.DisplayName} hits the {monster.DisplayName} {damage} damage, the {monster.DisplayName} has {monster.HitPoints} HP left!");
+                    if (monster.HitPoints <= 0)
                     {
-
-                        Console.WriteLine($"The {monsterName} rolls a {savingThrowDC} and fails to be saved!");
+                        Console.WriteLine($"The {monster.DisplayName} fails to be saved with a DC of {monster.SavingThrowDC}!");
                         break;
                     }
                 }
 
-                if (monsterHP <= 0)
+                if (monster.HitPoints <= 0)
                 {
                     break;
                 }
 
-                int saveRoll = DiceRoll(1, 20);
-                Console.WriteLine($"The {monsterName} Saved {savingThrowDC} from the attack!");
-                if (saveRoll >= savingThrowDC)
+                int saveRoll = DiceHelper.DiceRoll("1d20");
+                Console.WriteLine($"The {monster.DisplayName} makes a saving throw of {monster.SavingThrowDC}.");
+                if (saveRoll >= monster.SavingThrowDC)
                 {
-                    Console.WriteLine($"The  {monsterName}'s attack!");
+                    Console.WriteLine($"The party dodges the {monster.DisplayName}'s attack!");
                 }
                 else
                 {
-                    Console.WriteLine($"The {monsterName}'s attack hits the party!");
-                    int indexToRemove = rnd.Next(characterNames.Count);
-                    Console.WriteLine($"{characterNames[indexToRemove]} is killed by the {monsterName}!");
-                    characterNames.RemoveAt(indexToRemove);
-                    if (characterNames.Count == 0)
+                    Console.WriteLine($"The {monster.DisplayName}'s attack hits the party!");
+                    int indexToRemove = Random.Range(0, characters.Count);
+                    Console.WriteLine($"{characters[indexToRemove].DisplayName} is killed by the {monster.DisplayName}!");
+                    characters.RemoveAt(indexToRemove);
+                    if (characters.Count == 0)
                     {
                         Console.WriteLine("All characters are dead! Combat simulation over.");
                         return;
                     }
                 }
             }
-
             Console.WriteLine("Combat simulation over.");
         }
     }

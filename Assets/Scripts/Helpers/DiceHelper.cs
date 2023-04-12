@@ -1,20 +1,41 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using Random = System.Random;
 
 namespace MonsterQuest
 {
     public class DiceHelper
     {
+        private static readonly Random rng = new Random();
 
 
-
-        static int DiceRoll(string diceNotation)
+        public static int DiceRoll(int numberOfDice, int diceSides, int fixedBonus = 0)
         {
-            // Parse the dice notation string to get the number of rolls, the number of sides on the die, and any fixed bonus.
+            var random = new Random();
+            int result = 0;
+
+            for (int i = 0; i < numberOfDice; i++)
+            {
+                result += random.Next(1, diceSides + 1);
+            }
+            result += fixedBonus;
+            return result;
+        }
+
+
+        public static int DiceRoll(string diceNotation)
+        {
+            var (numberOfRolls, diceSides, fixedBonus) = ParseDiceNotation(diceNotation);
+            int total = 0;
+            for (int i = 0; i < numberOfRolls; i++)
+            {
+                total += rng.Next(1, diceSides + 1);
+            }
+            total += fixedBonus;
+            return total;
+        }
+
+        private static (int, int, int) ParseDiceNotation(string diceNotation)
+        {
             string[] parts = diceNotation.Split('d', '+', '-');
             int numberOfRolls = int.Parse(parts[0]);
             int diceSides = int.Parse(parts[1]);
@@ -35,18 +56,7 @@ namespace MonsterQuest
             {
                 fixedBonus = -1 * int.Parse(parts[3]);
             }
-
-            // Roll the dice and apply any fixed bonus or penalty.
-            Random rng = new Random();
-            int total = 0;
-            for (int i = 0; i < numberOfRolls; i++)
-            {
-                total += rng.Next(1, diceSides + 1);
-            }
-            total += fixedBonus;
-
-            // Return the result.
-            return total;
+            return (numberOfRolls, diceSides, fixedBonus);
         }
 
         static void Main(string[] args)
@@ -75,8 +85,6 @@ namespace MonsterQuest
             }
             Console.WriteLine(" ");
         }
-
-
     }
 }
 

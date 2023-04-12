@@ -31,7 +31,7 @@ namespace MonsterQuest
 
                 if (useSerialComma)
                 {
-                    
+
                     string lastItem = itemsCopy[items.Count() - 1];
                     lastItem = $"and {lastItem}";
                     itemsCopy[items.Count() - 1] = lastItem;
@@ -39,12 +39,11 @@ namespace MonsterQuest
                 }
                 else
                 {
-                    
+
                     string lastTwoItems = $"{itemsCopy[items.Count() - 2]} and {itemsCopy[items.Count() - 1]}";
                     itemsCopy[items.Count() - 2] = lastTwoItems;
 
 
-                    //Remove the last item in the copied list
                     itemsCopy.RemoveAt(items.Count() - 1);
 
                 }

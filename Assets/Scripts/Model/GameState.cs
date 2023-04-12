@@ -6,19 +6,20 @@ namespace MonsterQuest
 {
     public class GameState
     {
-           public Combat combat { get; private set; }
-            public Party party { get; private set; }
+        public Combat Combat { get; private set; }
+        public Party Party { get; private set; }
 
-            public GameState(Party party)
-            {
-                this.party = party;
-            
-            }
+        public GameState(Party party)
+        {
+            Party = party;
 
-            public void EnterCombatWithMonster(Monster monster)
-            {
-                this.combat = new Combat(monster);
-            }
-        
+        }
+
+        public GameState EnterCombatWithMonster(Monster monster)
+        {
+            Combat = new Combat(monster);
+            return this;
+        }
+
     }
 }

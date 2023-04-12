@@ -1,62 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MonsterQuest
 {
-    public class Monster : MonoBehaviour
+    public class Monster : Character
     {
-       
-        public string Description { get; private set; }
-        public string displayName { get; private set; }
-        public int hitPoints { get; private set; }
-        public int savingThrowDC { get; private set; }
-        public ArmorInformation armorInformation { get; set; }
-        public string TypeArmor { get; set; }
-        public string stringLine { get; private set; }
-        List<Monster> list = new List<Monster>();
-        public Monster()
-        { }
-        public  Monster(string displayName, string description, int HitPoints, int savingThrowDC, ArmorInformation armorInformation)
+        public int HitPoints { get; private set; }
+        public int SavingThrowDC { get; private set; }
+
+        public Monster(string displayName, string description, int hitPoints, int savingThrowDC, ArmorInformation armorInformation)
+            : base(displayName, description, armorInformation)
         {
-            displayName = displayName;
-            Description = description;
-            savingThrowDC = savingThrowDC;
             HitPoints = hitPoints;
-            
-            this.armorInformation = armorInformation;
-           
+            SavingThrowDC = savingThrowDC;
         }
-       
 
-        private static ArmorInformation getArmInfo(string str)
+
+        public void TakeDamage(int damage)
         {
-            ArmorInformation armorInformation = new ArmorInformation();
-
-            armorInformation.Class = int.Parse(str.Substring(0, 2));
-            if (str.Length > 3)
-            {
-                string typeStr = str.Substring(3);
-                typeStr = typeStr.Trim().Replace("(", "");
-                typeStr = typeStr.Replace(")", "");
-                typeStr = typeStr.Replace(" ", "");
-                typeStr = typeStr.Replace("Armor", "");
-                if (typeStr.Contains(','))
-                    typeStr = typeStr.Substring(0, typeStr.IndexOf(','));
-
-                armorInformation.Type = typeStr;
-            }
-            else
-                armorInformation.Type = "";
-            
-            return armorInformation;
+            HitPoints -= damage;
         }
-        
-    
-    
     }
-
-
-    
 }
-
