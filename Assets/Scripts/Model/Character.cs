@@ -2,24 +2,14 @@ using UnityEngine;
 
 namespace MonsterQuest
 {
-    public class Character
+    public class Character : Creature
     {
-        public string DisplayName { get; private set; }
-        public ArmorInformation ArmorInformation { get; private set; }
-        public string Description { get; private set; }
-        public string TypeArmor { get; private set; }
 
-        public Character(string displayName, string description, ArmorInformation armorInformation)
+
+        public Character(string displayName, string bodySpritePath, int hitPointsMaximum, SizeCategory sizeCategory, ArmorInformation armorInformation)
+            : base(displayName, bodySpritePath, hitPointsMaximum, sizeCategory, armorInformation)
         {
-
-            Description = description;
-            DisplayName = displayName;
-            ArmorInformation = armorInformation;
-
         }
-
-
-
 
         public static ArmorInformation GetArmorInformation(string str)
         {
@@ -41,12 +31,14 @@ namespace MonsterQuest
 
 
     }
+
     public class ArmorInformation
     {
         public int Class { get; set; }
         public string Type { get; set; }
     }
 }
+
 
 
 

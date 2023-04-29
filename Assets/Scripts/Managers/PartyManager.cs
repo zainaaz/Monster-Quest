@@ -8,10 +8,10 @@ namespace MonsterQuest
         {
             return new List<Character>
             {
-                new Character("Jazlyn",null,null),
-                new Character("Theron",null,null),
-                new Character("Dayana",null,null),
-                new Character("Roland",null,null),
+                new Character("Jazlyn","Assassin",10,SizeCategory.Medium,null),
+                new Character("Theron","Mage",10,SizeCategory.Medium,null),
+                new Character("Dayana","Paladin",10,SizeCategory.Medium,null),
+                new Character("Roland","Warrior",10,SizeCategory.Medium,null),
             };
 
 

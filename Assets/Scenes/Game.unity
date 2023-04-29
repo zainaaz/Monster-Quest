@@ -164,6 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 105512658}
   - component: {fileID: 105512659}
+  - component: {fileID: 105512660}
   m_Layer: 0
   m_Name: Combat
   m_TagString: Untagged
@@ -200,6 +201,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8f9284cb36d4642bc2a9414c9962c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &105512660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105512657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18da46847b544f67b4ae42c7a4d07151, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  creaturePrefab: {fileID: 2658546893688436781, guid: 757286616b97e4875bd11973767617ef, type: 3}
 --- !u!1 &497185838
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +693,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ae7448521fdbc4dbd27cfb56d46ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterSprites:
+  - {fileID: 21300000, guid: ab6aa09d1bbf9b7459052ce6d81d6227, type: 3}
+  - {fileID: 21300000, guid: 3cc6874f65bfc4a439c5bceb7757f760, type: 3}
+  - {fileID: 21300000, guid: 9aab0d45b2c7aac42bee8cbf461a5017, type: 3}
+  - {fileID: 21300000, guid: b094fb91ed151cf479025f92d6327e71, type: 3}
+  monsterSprites:
+  - {fileID: 21300000, guid: 6ccc5a756d40880498d2dbb22bca081a, type: 3}
+  - {fileID: 21300000, guid: 95e18a1fab8409c43aae6ecacbfd1790, type: 3}
+  - {fileID: 21300000, guid: 5dac9c0b50350b4429e29700609e32cd, type: 3}
 --- !u!1 &1088585501
 GameObject:
   m_ObjectHideFlags: 0
